@@ -32,7 +32,7 @@ int main(){
 			scanf("%d",&n1);  fflush(stdin);
 			n1=n1+a;
 			
-			for( i=0; i<n1;i++){
+			for( i=a; i<n1;i++){
 				printf("\nIndice: "); scanf("%c",&empleados[i].indice); fflush(stdin);
 				printf("Nombre del empleado: "); scanf("%s",&empleados[i].nombre);
 				printf("Edad: "); scanf("%d",&empleados[i].edad);
@@ -76,7 +76,7 @@ void imprimir(int i){
 		printf("Indice: %c\n", empleados[i].indice);
 		printf("Nombre: %s\n", empleados[i].nombre);
 		printf("Edad: %d\n", empleados[i].edad);
-		printf("Sueldo: %f\n\n", empleados[i].sueldo);
+		printf("Sueldo: %.2f\n\n", empleados[i].sueldo);
 }
 
 void buscar(int opcion){
@@ -106,9 +106,10 @@ void buscar(int opcion){
 				imprimir(i);
 				cad_bus[coincid]=i;
 				++coincid;
-				getchar();
 			}
 		}
+		fflush(stdin);
+		getchar();
 		coincidencias(coincid,opcion);
 		break;
 	case 2:
@@ -122,15 +123,16 @@ void buscar(int opcion){
 				imprimir(i);
 				cad_bus[coincid]=i;
 				++coincid;
-				getchar();
 			}
 		}
+		fflush(stdin);
+		getchar();
 		coincidencias(coincid,opcion);
 		break;
 	case 3:
 		do{		
 			system("cls");
-			printf("1.- Buscar por edad especifica ");
+			printf("1.- Buscar por edad especifica \n");
 			printf("2.- Buscar por rango de edad \n");
 			scanf("%d",&eda);
 			if (eda==1){
@@ -142,9 +144,10 @@ void buscar(int opcion){
 					imprimir(i);
 					cad_bus[coincid]=i;
 					++coincid;
-					getchar();
 					}
 				}
+				fflush(stdin);
+				getchar();
 				coincidencias(coincid,opcion);
 			}
 			else if(eda==2){
@@ -156,9 +159,10 @@ void buscar(int opcion){
 					imprimir(i);
 					cad_bus[coincid]=i;
 					++coincid;
-					getchar();
 					}
 				}
+				fflush(stdin);
+				getchar();
 				coincidencias(coincid,opcion);
 			}
 		}while(eda>2||eda<1);
@@ -167,21 +171,22 @@ void buscar(int opcion){
 	case 4:
 		do{		
 			system("cls");
-			printf("1.- Buscar por sueldo especifico ");
+			printf("1.- Buscar por sueldo especifico \n");
 			printf("2.- Buscar por rango de sueldo \n");
 			scanf("%d",&sul);
 			if (sul==1){
 				printf("Determina el sueldo: ");
-				scanf("%d",&sul1);
+				scanf("%f",&sul1);
 				for ( i = 0; i < a; i++){
 					if (sul1==empleados[i].sueldo){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
 					++coincid;
-					getchar();
 					}
 				}
+				fflush(stdin);
+				getchar();
 				coincidencias(coincid,opcion);
 			}
 			else if(sul==2){
@@ -193,9 +198,10 @@ void buscar(int opcion){
 					imprimir(i);
 					cad_bus[coincid]=i;
 					++coincid;
-					getchar();
 					}
 				}
+				fflush(stdin);
+				getchar();
 				coincidencias(coincid,opcion);
 			}
 		}while(sul>2||sul<1);
@@ -207,7 +213,7 @@ void buscar(int opcion){
 		else{
 			do{
 			system("cls");
-			printf("1.- Empleados actuales");
+			printf("1.- Empleados actuales\n");
 			printf("2.- Empleados pasados \n");
 			scanf("%d",est);
 			switch (est){
@@ -218,9 +224,10 @@ void buscar(int opcion){
 					imprimir(i);
 					cad_bus[coincid]=i;
 					++coincid;
-					getchar();
 					}
 				}
+				fflush(stdin);
+				getchar();
 				coincidencias(coincid,opcion);
 				break;
 			case 2:
@@ -230,9 +237,10 @@ void buscar(int opcion){
 					imprimir(i);
 					cad_bus[coincid]=i;
 					++coincid;
-					getchar();
 					}
 				}
+				fflush(stdin);
+				getchar();
 				coincidencias(coincid,opcion);
 				break;
 			}
@@ -252,7 +260,7 @@ void coincidencias(int coincid,int opcion){
 
 	else{
 		if (opcion==2){
-			printf("\n\nSeleccione el empleado que desea eliminar de la nomina: ");
+			printf("Seleccione el empleado que desea eliminar de la nomina: ");
 			scanf ("%d", &aux);
 			printf("Esta seguro de eliminar de la nomina a:\n");
 			imprimir(cad_bus[aux-1]);
@@ -263,6 +271,7 @@ void coincidencias(int coincid,int opcion){
 				empleados[cad_bus[aux-1]].estado=2;
 				system("cls");
 				printf("Listo");
+				fflush(stdin);
 				getchar();
 			}
 			else if(aux1==3){
@@ -270,10 +279,10 @@ void coincidencias(int coincid,int opcion){
 			}
 			else{
 				coincidencias(coincid,opcion);
-			}
+			} 
 		}
 		else if (opcion==4){
-			printf("\n\nSeleccione el empleado del que desea modificar datos: ");
+			printf("Seleccione el empleado del que desea modificar datos: ");
 			scanf ("%d", &aux);
 			printf("Esta seguro de modificar los datos de:\n");
 			imprimir(cad_bus[aux-1]);
@@ -292,22 +301,23 @@ void coincidencias(int coincid,int opcion){
 				switch (aux)
 				{
 				case 1:
-					printf("Indice actual: %c",empleados[aux1].indice);
+					fflush(stdin);
+					printf("Indice actual: %c\n",empleados[aux1].indice);
 					printf("Indice nuevo: ");
 					scanf("%c",&empleados[aux1].indice); fflush(stdin);
 					break;
 				case 2:
-					printf("Nombre actual: %s",empleados[aux1].nombre);
+					printf("Nombre actual: %s\n",empleados[aux1].nombre);
 					printf("Nombre nuevo: ");
 					scanf("%s",&empleados[aux1].nombre);
 					break;
 				case 3:
-					printf("Edad actual: %d",empleados[aux1].edad);
+					printf("Edad actual: %d\n",empleados[aux1].edad);
 					printf("Edad nueva: ");
 					scanf("%d",&empleados[aux1].edad);
 					break;
 				case 4:
-					printf("Sueldo actual: %f",empleados[aux1].sueldo);
+					printf("Sueldo actual: %f\n",empleados[aux1].sueldo);
 					printf("Sueldo nuevo: ");
 					scanf("%f",&empleados[aux1].sueldo);
 					break;
@@ -327,4 +337,6 @@ void coincidencias(int coincid,int opcion){
 			}
 		}
 	}
+	fflush(stdin);
+	main();
 }
