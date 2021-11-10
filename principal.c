@@ -40,7 +40,7 @@ int main(){
 				printf("Edad: "); scanf("%d",&empleados[i].edad);
 				printf("Sueldo: "); scanf("%f",&empleados[i].sueldo);  fflush(stdin);
 				empleados[i].estado=1;
-				++a;
+				++a; // Para no sobreescribir los datos de los empleados
 			}
 			system("cls");
 			printf("Listo");
