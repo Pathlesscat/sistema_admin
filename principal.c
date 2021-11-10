@@ -1,5 +1,7 @@
 #include<stdio.h>
-int a=0, i, aux, aux1;
+#include<string.h>
+
+int a=0, i, aux, aux1, aux2;
 int cad_bus[10];
 struct empleados{
 	char indice;
@@ -34,7 +36,7 @@ int main(){
 			
 			for( i=a; i<n1;i++){
 				printf("\nIndice: "); scanf("%c",&empleados[i].indice); fflush(stdin);
-				printf("Nombre del empleado: "); scanf("%s",&empleados[i].nombre);
+				printf("Nombre del empleado: "); gets(empleados[i].nombre);
 				printf("Edad: "); scanf("%d",&empleados[i].edad);
 				printf("Sueldo: "); scanf("%f",&empleados[i].sueldo);  fflush(stdin);
 				empleados[i].estado=1;
@@ -56,6 +58,7 @@ int main(){
 			case 5:
 				system("cls");
 				printf("\nHasta pronto");
+				getchar();
 				break;
 		}
 	}while(opcion!=5);
@@ -80,7 +83,8 @@ void imprimir(int i){
 }
 
 void buscar(int opcion){
-	int bus,eda,eda1,eda2,sul,sul1,sul2,est,coincid=0;
+	int bus,eda,eda1,eda2,est,sul,coincid=0;
+	float sul1,sul2;
 	do{
 	system("cls");
 	printf("Define la categoria de busqueda: \n");
@@ -101,7 +105,7 @@ void buscar(int opcion){
 		printf("Introduce el indice: ");
 		scanf("%c",&ind); fflush(stdin);
 		for ( i = 0; i < a; i++){
-			if (ind==empleados[i].indice){
+			if ((ind==empleados[i].indice)&&(empleados[i].estado==1)){
 				printf("%d.-\n",coincid+1);
 				imprimir(i);
 				cad_bus[coincid]=i;
@@ -114,11 +118,11 @@ void buscar(int opcion){
 		break;
 	case 2:
 		system("cls");
-		char nom;
+		char nom[100];
 		printf("Introduce el nombre: ");
-		scanf("%s",&nom);
+		gets(nom);
 		for ( i = 0; i < a; i++){
-			if (nom==empleados[i].nombre){
+			if ((strcmp(empleados[i].nombre, nom) == 0)&&(empleados[i].estado==1)){
 				printf("%d.-\n",coincid+1);
 				imprimir(i);
 				cad_bus[coincid]=i;
@@ -139,7 +143,7 @@ void buscar(int opcion){
 				printf("Determina la edad: ");
 				scanf("%d",&eda1);
 				for ( i = 0; i < a; i++){
-					if (eda1==empleados[i].edad){
+					if ((eda1==empleados[i].edad)&&(empleados[i].estado==1)){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
@@ -154,7 +158,7 @@ void buscar(int opcion){
 				printf("Edad minima: ");scanf("%d",&eda1);
 				printf("Edad maxima: ");scanf("%d",&eda2);
 				for ( i = 0; i < a; i++){
-					if ((eda1<=empleados[i].edad)&&(eda2>=empleados[i].edad)){
+					if ((eda1<=empleados[i].edad)&&(eda2>=empleados[i].edad)&&(empleados[i].estado==1)){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
@@ -178,7 +182,7 @@ void buscar(int opcion){
 				printf("Determina el sueldo: ");
 				scanf("%f",&sul1);
 				for ( i = 0; i < a; i++){
-					if (sul1==empleados[i].sueldo){
+					if ((sul1==empleados[i].sueldo)&&(empleados[i].estado==1)){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
@@ -190,10 +194,10 @@ void buscar(int opcion){
 				coincidencias(coincid,opcion);
 			}
 			else if(sul==2){
-				printf("Sueldo minimo: ");scanf("%d",&sul1);
-				printf("Sueldo maximo: ");scanf("%d",&sul2);
+				printf("Sueldo minimo: ");scanf("%f",&sul1);
+				printf("Sueldo maximo: ");scanf("%f",&sul2);
 				for ( i = 0; i < a; i++){
-					if ((sul1<=empleados[i].sueldo)&&(sul2>=empleados[i].sueldo)){
+					if ((sul1<=empleados[i].sueldo)&&(sul2>=empleados[i].sueldo)&&(empleados[i].estado==1)){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
@@ -215,11 +219,11 @@ void buscar(int opcion){
 			system("cls");
 			printf("1.- Empleados actuales\n");
 			printf("2.- Empleados pasados \n");
-			scanf("%d",est);
+			scanf("%d",&est);
 			switch (est){
 			case 1:
 				for ( i = 0; i < a; i++){
-					if (1==empleados[i].estado){
+					if (empleados[i].estado==1){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
@@ -232,7 +236,7 @@ void buscar(int opcion){
 				break;
 			case 2:
 				for ( i = 0; i < a; i++){
-					if (2==empleados[i].estado){
+					if (empleados[i].estado==2){
 					printf("%d.-\n",coincid+1);
 					imprimir(i);
 					cad_bus[coincid]=i;
@@ -244,10 +248,9 @@ void buscar(int opcion){
 				coincidencias(coincid,opcion);
 				break;
 			}
-		} while (est>2||est<1);
-		
-		break;
+			} while (est>2||est<1);
 		}
+		break;
 	}
 }
 
@@ -268,25 +271,26 @@ void coincidencias(int coincid,int opcion){
 			scanf("%d",&aux1);
 
 			if (aux1==1){
-				empleados[cad_bus[aux-1]].estado=2;
+				aux2=cad_bus[aux-1];
+				empleados[aux2].estado=2;
 				system("cls");
 				printf("Listo");
 				fflush(stdin);
 				getchar();
 			}
 			else if(aux1==3){
-				main();
+				a=a;
 			}
 			else{
-				coincidencias(coincid,opcion);
-			} 
+				coincidencias(coincid, opcion);
+			}
 		}
 		else if (opcion==4){
 			printf("Seleccione el empleado del que desea modificar datos: ");
 			scanf ("%d", &aux);
 			printf("Esta seguro de modificar los datos de:\n");
 			imprimir(cad_bus[aux-1]);
-			printf("\nSi (1) No(2) Salir al menu principal(3): ");
+			printf("\nSi (1) No(2)");
 			scanf("%d",&aux1);
 
 			if (aux1==1){
@@ -297,29 +301,32 @@ void coincidencias(int coincid,int opcion){
 				printf("4.- Sueldo \n");
 				printf("5.- Salir al menu principal\n");
 				scanf("%d", &aux);
-				aux1=cad_bus[aux-1];
+		
 				switch (aux)
 				{
 				case 1:
 					fflush(stdin);
-					printf("Indice actual: %c\n",empleados[aux1].indice);
+					printf("Indice actual: %c\n",empleados[cad_bus[aux-1]].indice);
 					printf("Indice nuevo: ");
-					scanf("%c",&empleados[aux1].indice); fflush(stdin);
+					scanf("%c",&empleados[cad_bus[aux-1]].indice); fflush(stdin);
 					break;
 				case 2:
-					printf("Nombre actual: %s\n",empleados[aux1].nombre);
+					fflush(stdin);
+					printf("Nombre actual: %s\n",empleados[cad_bus[aux-1]].nombre);
 					printf("Nombre nuevo: ");
-					scanf("%s",&empleados[aux1].nombre);
+					gets(empleados[cad_bus[aux-1]].nombre);
 					break;
 				case 3:
-					printf("Edad actual: %d\n",empleados[aux1].edad);
+					fflush(stdin);
+					printf("Edad actual: %d\n",empleados[cad_bus[aux-1]].edad);
 					printf("Edad nueva: ");
-					scanf("%d",&empleados[aux1].edad);
+					scanf("%d",&empleados[cad_bus[aux-1]].edad);
 					break;
 				case 4:
-					printf("Sueldo actual: %f\n",empleados[aux1].sueldo);
+					fflush(stdin);
+					printf("Sueldo actual: %f\n",empleados[cad_bus[aux-1]].sueldo);
 					printf("Sueldo nuevo: ");
-					scanf("%f",&empleados[aux1].sueldo);
+					scanf("%f",&empleados[cad_bus[aux-1]].sueldo);
 					break;
 				case 5:
 					main();
@@ -329,11 +336,8 @@ void coincidencias(int coincid,int opcion){
 					break;
 				}
 			}
-			else if(aux1==3){
-				main();
-			}
 			else{
-				coincidencias(coincid,opcion);
+				main();
 			}
 		}
 	}
